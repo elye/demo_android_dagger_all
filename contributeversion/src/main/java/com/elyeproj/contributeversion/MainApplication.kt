@@ -4,6 +4,8 @@ package com.elyeproj.contributeversion
 import android.app.Application
 import com.elyeproj.common.ActivityScope
 import com.elyeproj.common.FragmnetScope
+import com.elyeproj.common.MainActivitySubModule
+import com.elyeproj.common.MainFragmentSubModule
 import dagger.Component
 import dagger.Module
 import dagger.android.*

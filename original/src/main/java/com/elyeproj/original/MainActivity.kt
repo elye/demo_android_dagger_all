@@ -5,19 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.elyeproj.common.ActivityScope
 import com.elyeproj.common.DataInjectFromActivity
-import dagger.Module
-import dagger.Provides
+import com.elyeproj.common.MainActivitySubModule
 import dagger.Subcomponent
 import javax.inject.Inject
-
-
-@Module
-object MainActivitySubModule {
-    @JvmStatic
-    @Provides
-    @ActivityScope
-    fun data() = DataInjectFromActivity("From Activity")
-}
 
 class MainActivity : AppCompatActivity() {
     @Inject lateinit var data: DataInjectFromActivity
