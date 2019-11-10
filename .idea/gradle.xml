@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/contributeversion" />
             <option value="$PROJECT_DIR$/fullversion" />
             <option value="$PROJECT_DIR$/original" />
           </set>

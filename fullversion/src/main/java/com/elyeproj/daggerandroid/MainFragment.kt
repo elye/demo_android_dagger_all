@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.elyeproj.common.DataInjectFromFragment
+import com.elyeproj.common.FragmnetScope
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,12 +20,11 @@ import dagger.multibindings.IntoMap
 import javax.inject.Inject
 
 
-
-
 @Module
 object MainFragmentSubModule {
     @JvmStatic
     @Provides
+    @FragmnetScope
     fun data() = DataInjectFromFragment("From Fragment")
 }
 
@@ -47,6 +47,7 @@ class MainFragment: Fragment() {
     }
 }
 
+@FragmnetScope
 @Subcomponent(modules = [MainFragmentSubModule::class])
 interface MainFragmentSubcomponent: AndroidInjector<MainFragment> {
     @Subcomponent.Factory

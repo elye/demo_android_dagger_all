@@ -3,7 +3,9 @@ package com.elyeproj.daggerandroid
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import com.elyeproj.common.ActivityScope
 import com.elyeproj.common.DataInjectFromActivity
+import com.elyeproj.common.FragmnetScope
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,6 +23,7 @@ import javax.inject.Inject
 object MainActivitySubModule {
     @JvmStatic
     @Provides
+    @ActivityScope
     fun data() = DataInjectFromActivity("From Activity")
 }
 
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
     }
 }
 
+@ActivityScope
 @Subcomponent(modules = [MainActivitySubModule::class])
 interface MainActivitySubcomponent: AndroidInjector<MainActivity> {
     @Subcomponent.Factory

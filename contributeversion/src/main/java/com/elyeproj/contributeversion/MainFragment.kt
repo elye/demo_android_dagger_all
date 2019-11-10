@@ -1,4 +1,4 @@
-package com.elyeproj.original
+package com.elyeproj.contributeversion
 
 import android.content.Context
 import android.os.Bundle
@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.elyeproj.common.ActivityScope
 import com.elyeproj.common.DataInjectFromFragment
 import com.elyeproj.common.FragmnetScope
 import dagger.Module
 import dagger.Provides
-import dagger.Subcomponent
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-
 
 @Module
 object MainFragmentSubModule {
@@ -28,7 +26,7 @@ class MainFragment: Fragment() {
     @Inject lateinit var data: DataInjectFromFragment
 
     override fun onAttach(context: Context) {
-        (context.applicationContext as MainApplication).component.mainFragmentSubcomponent.inject(this)
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
@@ -40,10 +38,4 @@ class MainFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<TextView>(R.id.txt_fragment).text = data.message
     }
-}
-
-@FragmnetScope
-@Subcomponent(modules = [MainFragmentSubModule::class])
-interface MainFragmentSubcomponent {
-    fun inject(mainFragment: MainFragment)
 }
