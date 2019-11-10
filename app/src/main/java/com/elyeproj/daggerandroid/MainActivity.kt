@@ -1,32 +1,41 @@
 package com.elyeproj.daggerandroid
 
-import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.widget.Toast
+import android.support.v7.app.AppCompatActivity
 import dagger.*
 import dagger.android.*
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-data class Data(val message: String)
+
+data class DataInjectFromActivity(val message: String)
 
 @Module
 object MainActivitySubModule {
     @JvmStatic
     @Provides
-    fun data() = Data("My message")
+    fun data() = DataInjectFromActivity("From Activity")
 }
 
-class MainActivity : Activity() {
-    @Inject lateinit var data: Data
+class MainActivity : AppCompatActivity(), HasAndroidInjector {
+    @Inject lateinit var data: DataInjectFromActivity
+    @Inject lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
         setContentView(R.layout.activity_main)
 
-        Toast.makeText(this, data.message, Toast.LENGTH_SHORT).show()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MainFragment()).commit()
+
+        txt_activity.text = data.message
+    }
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return androidInjector
     }
 }
 
@@ -35,24 +44,6 @@ interface MainActivitySubcomponent: AndroidInjector<MainActivity> {
     @Subcomponent.Factory
     interface Factory: AndroidInjector.Factory<MainActivity>
 }
-
-class MainApplication: Application(), HasAndroidInjector {
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    override fun onCreate() {
-        super.onCreate()
-        DaggerMainApplicationComponent.create()
-            .inject(this)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector
-    }
-}
-
-@Component(modules = [AndroidInjectionModule::class, MainActivityModule::class])
-interface MainApplicationComponent: AndroidInjector<MainApplication>
 
 @Module(subcomponents = [MainActivitySubcomponent::class])
 abstract class MainActivityModule {
