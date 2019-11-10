@@ -1,6 +1,5 @@
 package com.elyeproj.daggerandroid
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -25,11 +24,11 @@ data class DataInjectFromFragment(val message: String)
 object MainFragmentSubModule {
     @JvmStatic
     @Provides
-    fun data() = DataInjectFromActivity("From Fragment")
+    fun data() = DataInjectFromFragment("From Fragment")
 }
 
 class MainFragment: Fragment() {
-    @Inject lateinit var data: DataInjectFromActivity
+    @Inject lateinit var data: DataInjectFromFragment
 
 
     override fun onAttach(context: Context) {

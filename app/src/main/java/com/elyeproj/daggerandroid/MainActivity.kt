@@ -1,10 +1,15 @@
 package com.elyeproj.daggerandroid
 
-import android.app.Application
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import dagger.*
-import dagger.android.*
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.Subcomponent
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 import kotlinx.android.synthetic.main.activity_main.*
